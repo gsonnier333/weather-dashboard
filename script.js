@@ -3,9 +3,38 @@ var apiKey = "&appid=d592dcfacf2862a2f02f038fed6d4e51";
 var onecallUrl = "https://api.openweathermap.org/data/2.5/onecall?";
 var loading = false; //use this boolean to keep the user from spamming the search button while their previous search loads
 
+
 $(document).ready(function(){
+    var history = localStorage.getItem("history");
+    if(history===null){
+        localStorage.setItem("history", JSON.stringify([]));
+    }
+    history = JSON.parse(localStorage.getItem("history"));
     
+    function updateHistory(name){
+        if(history.includes(name)){ //if this city is in the search history
+            history.splice(history.indexOf(name), 1); //remove its previous occurrence to avoid duplicate buttons
+            history.unshift(name); //prepend new search to history so it shows as most recent
+        }
+        else{
+            history.unshift(name); //prepend new search to the history array
+        }
+        console.log(history);
+        localStorage.setItem("history", JSON.stringify(history)); //store the updated history into localStorage
+        showButtons();
+    }
     
+    function showButtons(){
+        $("#searchHistory").empty();
+        $("#searchHistory").text("Search history: ").append($("<br>"));
+        history.forEach(function(city){
+            var newBtn = $("<button>").text(city).attr("class", "historyBtn");
+            newBtn.appendTo($("#searchHistory"));
+        });
+        $(".historyBtn").click(function(){
+            forecast(this.textContent);
+        })
+    }
     
     function showWeather(apiObj){
         $("#todayTemp").text("Temperature: " + apiObj.current.temp + " F");
@@ -44,7 +73,9 @@ $(document).ready(function(){
     }
     
     function forecast(city){
+        console.log(city);
         if(loading){return;} //tell it to stop if it's loading
+        if(city===""){return;} //tell it to stop if the user didn't input anything
         loading = true;
         var day = new Date(Date.now()).toDateString(); //keep track of the current date to display
         $.ajax({
@@ -52,6 +83,10 @@ $(document).ready(function(){
             method: "GET"
         }).then(function(response){
             console.log(response);
+            // if(!history.includes(response.name)){ //only do this if this city isn't already in their search history
+            //     updateHistory(response.name);
+            // }
+            updateHistory(response.name);
             console.log("Next, getting onecall forecast");
             var lat = "lat=" + response.coord.lat; //get the city's latitude
             var lon = "&lon=" + response.coord.lon; //get the longitude
@@ -72,5 +107,10 @@ $(document).ready(function(){
        var queryCity = $("#cityInput").val();
        forecast(queryCity); 
     });
+    
+    showButtons();
+    if(history.length>0){
+        forecast(history[0]); //load the weather forecast for the last city searched when the page reloads
+    }
 });
 
