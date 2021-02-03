@@ -29,7 +29,7 @@ $(document).ready(function(){
         $("#searchHistory").text("Search history: ").append($("<br>"));
         history.forEach(function(city){
             var newBtn = $("<button>").text(city).attr("class", "historyBtn");
-            newBtn.appendTo($("#searchHistory"));
+            newBtn.appendTo($("#searchHistory")); //add buttons for each city in the search history
         });
         $(".historyBtn").click(function(){
             forecast(this.textContent);
@@ -72,7 +72,7 @@ $(document).ready(function(){
         loading = false; //let it know it's done loading
     }
     
-    function forecast(city){
+    function forecast(city){ //note: if the string given by the user isn't a city recognized by the api, the page will stop functioning. Consider looking into fixes for this in the future.
         console.log(city);
         if(loading){return;} //tell it to stop if it's loading
         if(city===""){return;} //tell it to stop if the user didn't input anything
