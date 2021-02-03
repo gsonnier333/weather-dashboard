@@ -4,6 +4,37 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		/>
+		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body></body>
+	<body>
+		<header><h1>Weather Dashboard</h1></header>
+		<div class="container">
+			<input type="text" placeholder="City" id="cityInput" />
+			<button id="searchBtn">Search</button>
+			<div class="row">
+				<div class="col-4">Search History</div>
+				<div class="col-8">
+					<h2 id="cityName">City Name</h2>
+					<h4 id="date">Date</h4>
+					<div id="todayTemp">Temperature:</div>
+					<div id="todayHum">Humidity:</div>
+					<div id="todayWind">Wind Speed:</div>
+					<div id="uvIndex">UV Index:</div>
+					<div class="row">
+						<div class="col forecast">Day1</div>
+						<div class="col forecast">Day2</div>
+						<div class="col forecast">Day3</div>
+						<div class="col forecast">Day4</div>
+						<div class="col forecast">Day5</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="./script.js"></script>
 </html>

@@ -1,0 +1,23 @@
+body {
+	background-color: rgb(147, 209, 238);
+}
+header {
+	text-align: center;
+	background-color: gray;
+	color: white;
+}
+input,
+button {
+	margin: 1% 1%;
+}
+.container {
+	background-color: white;
+	border-style: solid;
+	border-color: slategrey;
+	border-width: 1px;
+}
+.forecast {
+	background-color: rgb(80, 80, 238);
+	margin: 1% 1%;
+	color: white;
+}
