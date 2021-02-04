@@ -40,7 +40,16 @@ $(document).ready(function(){
         $("#todayTemp").text("Temperature: " + apiObj.current.temp + " F");
         $("#todayHum").text("Humidity: " + apiObj.current.humidity + "%");
         $("#todayWind").text("Wind Speed: " + apiObj.current.wind_speed + " MPH");
-        $("#uvIndex").text("UV Index: " + apiObj.current.uvi);
+        $("#uvIndex").html("UV Index: <span id=\"uvNum\">&nbsp;" + apiObj.current.uvi + "&nbsp;</span>");
+        if(apiObj.current.uvi<2){
+            $("#uvNum").attr("style", "background-color: green"); //safe
+        }
+        else if(apiObj.current.uvi<5){
+            $("#uvNum").attr("style", "background-color: yellow"); //moderate risk
+        }
+        else{
+            $("#uvNum").attr("style", "background-color: red"); //high risk
+        }
         let [month, date, year] = new Date().toLocaleDateString("en-US").split("/");
         for(var i = 1; i < 6; i++){ //populate the 5-day forecast
             var weather = apiObj.daily[i-1].weather[0].main;

@@ -24,3 +24,8 @@ button {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 }
+
+#uvNum {
+	color: white;
+	border-radius: 2px;
+}
